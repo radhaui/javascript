@@ -1,0 +1,39 @@
+//Recursion 
+// multiply array elements
+const multiply = (arr) => {
+	if(arr.length<=0) {
+  	return 1;
+  } else
+  {
+  	return arr[arr.length-1] * multiply(arr.slice(0,arr.length-1));
+  }
+}
+
+console.log(multiply([1,2,3,4,5]));
+
+//n factorial 
+
+const factorial = (n) => {
+	if(n===1){
+  	return 1;
+  } else {
+  	return n * factorial(n-1);
+  }
+}
+
+console.log(factorial(5));
+
+//create an array range of numbers
+//input start=1 end=5 output=[1,2,3,4,5]
+//const output = [];
+const range = (start,end) => {
+	if(start>end){
+  	return [];
+  } else {
+  	const output = range(start,end-1);
+    console.log(output);
+    output.push(end);
+  	return output;
+  }
+}
+console.log(range(1,5));
