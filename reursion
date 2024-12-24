@@ -64,3 +64,25 @@ console.log(isPalindrome("cac")); // true
 //console.log(isPalindrome("madamm"));   // false
 //console.log(isPalindrome("A man, a plan, a canal, Panama")); // true
 
+
+// reverse a string using recurssion
+//input = hello  output = olleh
+//hello =>
+const reverseStr = (str) => {
+console.log(str);
+		if(str === "") 
+    {
+    return "";
+    }
+    else return reverseStr(str.substr(1)) + str.charAt(0);
+}
+
+console.log(reverseStr("hello"));
+
+//reverse("ello") + h => olleh
+// reverse("llo") + e => olle
+// reverse("lo") + l => oll
+//reverse("o") + l => ol
+//reverse("") + o  => o
+//""
+
