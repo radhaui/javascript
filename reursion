@@ -37,3 +37,30 @@ const range = (start,end) => {
   }
 }
 console.log(range(1,5));
+
+//palindrome
+
+function isPalindrome(str) {
+    // Remove non-alphanumeric characters and convert to lowercase
+    str = str.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+
+    // Base case: if the string has 0 or 1 character, it's a palindrome
+    if (str.length <= 1) {
+        return true;
+    }
+
+    // Check if the first and last characters are the same
+    if (str[0] !== str[str.length - 1]) {
+        return false;
+    }
+    console.log(str);
+
+    // Recursive case: check the substring excluding the first and last characters
+    return isPalindrome(str.slice(1, -1));
+}
+
+// Example usage
+console.log(isPalindrome("cac")); // true
+//console.log(isPalindrome("madamm"));   // false
+//console.log(isPalindrome("A man, a plan, a canal, Panama")); // true
+
