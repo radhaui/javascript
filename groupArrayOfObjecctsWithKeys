@@ -1,0 +1,61 @@
+let input = [
+{
+	key:"Sample 1",
+  data:"Data 1"
+},{
+	key:"Sample 2",
+  data:"Data 1"
+},{
+	key:"Sample 3",
+  data:"Data 1"
+},{
+	key:"Sample 1",
+  data:"Data 1"
+},{
+	key:"Sample 3",
+  data:"Data 1"
+},{
+	key:"Sample 1",
+  data:"Data 1"
+}
+];
+let output = {};
+//output should be 
+{
+  Sample 1: [{
+  data: "Data 1",
+  key: "Sample 1"
+}, {
+  data: "Data 1",
+  key: "Sample 1"
+}, {
+  data: "Data 1",
+  key: "Sample 1"
+}],
+  Sample 2: [{
+  data: "Data 1",
+  key: "Sample 2"
+}],
+  Sample 3: [{
+  data: "Data 1",
+  key: "Sample 3"
+}, {
+  data: "Data 1",
+  key: "Sample 3"
+}]
+}
+
+
+const tranformArray = () => {
+	input.forEach((obj) => {
+  	if(output[obj.key]) {
+    	output[obj.key].push(obj);
+    } else {
+    output[obj.key]=[obj];
+    }
+    
+  });
+ 
+};
+tranformArray();
+console.log(output);
