@@ -19,3 +19,35 @@ let countOccurence = fruits.reduce((acc,current)=>{
   return acc;
 },{});
 console.log(countOccurence);
+let input1 = [
+{
+	key:"Sample 1",
+  data:"Data 1"
+},{
+	key:"Sample 2",
+  data:"Data 1"
+},{
+	key:"Sample 3",
+  data:"Data 1"
+},{
+	key:"Sample 1",
+  data:"Data 1"
+},{
+	key:"Sample 3",
+  data:"Data 1"
+},{
+	key:"Sample 1",
+  data:"Data 1"
+}
+];
+
+const groupByKey = input1.reduce((acc,current)=>{
+	if(!acc[current.key]){
+  	acc[current.key]=[];
+    }
+ 
+  	acc[current.key].push(current);
+  return acc;
+},{});
+
+console.log(groupByKey);
