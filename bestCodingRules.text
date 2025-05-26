@@ -1,0 +1,98 @@
+🎓 Frontend Best Coding Practices
+1️⃣ Write Clean and Readable Code
+Use meaningful names for variables, functions, and components.
+
+Follow a consistent naming convention (camelCase for variables/functions, PascalCase for components).
+
+Keep functions small and focused on a single task.
+
+Use destructuring to access object/array properties.
+
+Indent consistently and format your code (Prettier or editor formatting).
+
+javascript
+Copy
+Edit
+// ❌ Bad
+function x(y, z) {}
+
+// ✅ Good
+function handleFormSubmit(event, formData) {}
+2️⃣ Keep Components Small and Focused
+Single Responsibility Principle (SRP): Each component should do one thing well.
+
+If a component grows too big, split it into smaller components.
+
+jsx
+Copy
+Edit
+// Too big
+function ProductPage() { /* many responsibilities */ }
+
+// Better
+function ProductPage() { /* high-level */ }
+function ProductDetails() {}
+function ProductReviews() {}
+3️⃣ Use Reusable Components & Utilities
+DRY (Don’t Repeat Yourself): Create reusable components, hooks, and utility functions.
+
+Extract logic into custom hooks in React or composables in Vue.
+
+4️⃣ Write Responsive and Accessible Code
+Use semantic HTML (<button>, <nav>, <section>).
+
+Add ARIA attributes when necessary.
+
+Follow WCAG guidelines for accessibility.
+
+Use flexbox or CSS grid for responsive layouts.
+
+Test with keyboard navigation and screen readers.
+
+5️⃣ State Management Best Practices
+Lift state up only when necessary.
+
+Minimize state — only store what is necessary for UI rendering.
+
+Use state libraries (like Redux, Zustand, Recoil) if the app grows complex.
+
+For React: Prefer useState, useReducer, and context for simpler state management before jumping to external libraries.
+
+6️⃣ Optimize Performance
+Use memoization: useMemo, useCallback in React, computed in Vue.
+
+Avoid unnecessary re-renders:
+
+Use React.memo or PureComponent.
+
+Pass only needed props.
+
+Lazy-load components: React lazy, dynamic imports.
+
+Load assets efficiently: code splitting, lazy loading images.
+
+7️⃣ Write Tests
+Use unit tests for logic (Jest, Vitest).
+
+Use component tests (React Testing Library, Vue Testing Library).
+
+Use end-to-end tests (Cypress, Playwright).
+
+8️⃣ Version Control & Collaboration
+Use Git properly: write clear commit messages, follow a branching strategy (e.g., feature branches).
+
+Follow a pull request review process.
+
+Document your work (README, comments for complex logic).
+
+9️⃣ Follow Modern JavaScript/TypeScript Practices
+Use ES6+ features: let, const, arrow functions, template literals, destructuring.
+
+Prefer TypeScript for type safety in larger projects.
+
+🔟 Stay Updated & Follow Best Tools
+Keep up with framework best practices (React, Vue, Angular).
+
+Use linters (ESLint), formatters (Prettier), and code analyzers.
+
+Use modern build tools: Vite, Webpack, etc.
