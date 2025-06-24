@@ -1,0 +1,298 @@
+A promise object has a state that can be one of the following:
+
+Pending
+Fulfilled with a value
+Rejected for a reason
+In the beginning, the state of a promise is pending, indicating that the asynchronous operation is in progress. Depending on the result of the asynchronous operation, the state changes to either fulfilled or rejected.
+
+The fulfilled state indicates that the asynchronous operation was completed successfully:
+
+let p=new Promise((resolve,reject)=>{
+    setTimeout(()=>{
+        console.log("test0");
+        resolve(10);
+       // reject("rejected");
+        console.log("test1");
+    },1000)
+})
+
+p.then((result)=>{
+    console.log(result); //success message
+}).catch((error)=>{
+     console.log(error); // rejected message
+});
+
+chaning:
+---------------------
+Sometimes, you want to execute two or more related asynchronous operations, where the next operation starts with the result from the previous one.
+let p = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve(10);
+    }, 3 * 100);
+});
+
+p.then((result) => {
+    console.log(result);
+    return result * 2;
+}).then((result) => {
+    console.log(result);
+    return result * 3;
+});
+output: 10 , 20
+
+above example with out chaning
+let p = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve(10);
+    }, 3 * 100);
+});
+
+p.then((result) => {
+    console.log(result); // 10
+    return result * 2;
+})
+
+p.then((result) => {
+    console.log(result); // 10
+    return result * 3;
+})
+
+p.then((result) => {
+    console.log(result); // 10
+    return result * 4;
+});
+output:
+10,10,10
+
+Promise.all():
+---------------------------
+1.The Promise.all() method returns a single promise that resolves when all the input promises have been resolved. The returned promise resolves to an array of the results of the input promises:
+const p1 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    console.log('The first promise has resolved');
+    resolve(10);
+  }, 1 * 1000);
+});
+const p2 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    console.log('The second promise has resolved');
+    resolve(20);
+  }, 2 * 1000);
+});
+const p3 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    console.log('The third promise has resolved');
+    resolve(30);
+  }, 3 * 1000);
+});
+
+Promise.all([p1, p2, p3]).then((results) => {
+  const total = results.reduce((p, c) => p + c);
+
+  console.log(`Results: ${results}`);
+  console.log(`Total: ${total}`);
+});
+output:
+-----------------------
+The first promise has resolved
+The second promise has resolved
+The third promise has resolved
+Results: 10,20,30
+Total: 60
+
+2.If one of the input promises is rejected, the Promise.all() method immediately returns a promise that is rejected with an error of the first rejected promise:
+const p1 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve(10)
+   // reject('Failed');
+  }, 1 * 1000);
+});
+const p2 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve(20);
+  }, 2 * 1000);
+});
+const p3 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    reject('Failed');
+  }, 3 * 1000);
+});
+
+Promise.all([p1, p2, p3]).then((results) => {
+  const total = results.reduce((p, c) => p + c);
+
+  console.log(`Results: ${results}`);
+  console.log(`Total: ${total}`);
+}).catch((error) => {console.log(error)});
+output:
+error
+
+Promise.race()
+-----------------------------------------
+The Promise.race() static method accepts a list of promises as an iterable object and returns a new promise that fulfills or rejects as soon as there is one promise that fulfills or rejects, with the value or reason from that promise.
+const p1 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        console.log('The first promise has resolved');
+        resolve(10);
+    }, 1 * 1000);
+
+});
+
+const p2 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        console.log('The second promise has resolved');
+        resolve(20);
+    }, 500);
+});
+
+
+Promise.race([p1, p2])
+    .then(value => console.log(`Resolved: ${value}`))
+    .catch(reason => console.log(`Rejected: ${reason}`));
+
+	output:
+ ------------------------
+ The first promise has resolved
+Resolved: 10
+The second promise has resolved
+
+
+const p1 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        console.log('The first promise has resolved');
+        resolve(10);
+    }, 1 * 1000);
+
+});
+
+const p2 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        console.log('The second promise has resolved');
+        reject("error");
+    }, 500);
+});
+
+
+Promise.race([p1, p2])
+    .then(value => console.log(`Resolved: ${value}`))
+    .catch(reason => console.log(`Rejected: ${reason}`));
+
+output:
+----------------------------
+The second promise has resolved
+Rejected: error
+The first promise has resolved
+
+
+Promise.any()
+------------------------------------
+the Promise.any() returns a single promise that resolves to a value which is the result of the fulfilled promise:
+all promisess resolved example
+const p1 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    console.log('Promise 1 fulfilled');
+    resolve(1);
+  }, 1000);
+});
+
+const p2 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    console.log('Promise 2 fulfilled');
+    resolve(2);
+  }, 2000);
+});
+
+const p = Promise.any([p1, p2]);
+p.then((value) => {
+  console.log('Returned Promise');
+  console.log(value);
+});
+output:
+Promise 1 fulfilled
+Returned Promise
+1
+Promise 2 fulfilled
+
+One promise rejected example::::
+if one is rejected an d another one is reolved it will show resolve one only.
+const p1 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    console.log('Promise 1 rejected');
+    reject('error');
+  }, 1000);
+});
+
+const p2 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    console.log('Promise 2 fulfilled');
+    resolve(2);
+  }, 2000);
+});
+
+const p = Promise.any([p1, p2]);
+p.then((value) => {
+  console.log('Returned Promise');
+  console.log(value);
+});
+output:
+Promise 1 rejected
+Promise 2 fulfilled
+Returned Promise
+2
+
+3) All promises rejected example
+const p1 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    console.log('Promise 1 rejected');
+    reject('error1');
+  }, 1000);
+});
+
+const p2 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    console.log('Promise 2 rejected');
+    reject('error2');
+  }, 2000);
+});
+
+const p = Promise.any([p1, p2]);
+p.catch((e) => {
+  console.log('Returned Promise');
+  console.log(e, e.errors);
+});
+output:
+Promise 1 rejected
+Promise 2 rejected
+Returned Promise
+[AggregateError: All promises were rejected] [ 'error1', 'error2' ]
+
+Promise.allSettled()
+-----------------------------------
+returns a new promise that resolves after all the input promises have settled, either resolved or rejected.
+
+const p1 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        console.log('The first promise has resolved');
+        resolve(10);
+    }, 1 * 1000);
+
+});
+
+const p2 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        console.log('The second promise has rejected');
+        reject(20);
+    }, 2 * 1000);
+});
+
+Promise.allSettled([p1, p2])
+    .then((result) => {
+        console.log(result);
+    });
+output::
+The first promise has resolved
+The second promise has rejected
+[
+  { status: 'fulfilled', value: 10 },
+  { status: 'rejected', reason: 20 }
+]
