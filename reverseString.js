@@ -27,3 +27,22 @@ for(var i=strArray.length-1;i>=0;i--){
 }
 console.log(reversStr);
 
+
+const str="radha";
+let revStr="";
+for(x of str){
+  revStr = x + revStr;
+}
+
+console.log(revStr);
+
+function reverseString(str) {
+  // base case
+  if (str === "") {
+    return "";
+  }
+  // recursive case
+  return reverseString(str.slice(1)) + str[0];
+}
+
+console.log(reverseString("hello")); 
